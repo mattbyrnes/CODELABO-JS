@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ProjectList from './ProjectList';
-import Editor from './Editor';
+// import Editor from './Editor';
 
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/material.css';
+
+import {UnControlled as CodeMirror} from 'react-codemirror2'
+
+// import CodeMirror from 'react-codemirror2';
+require('codemirror/mode/xml/xml');
+require('codemirror/mode/javascript/javascript');
 
 // import './App.css';
 
@@ -49,11 +57,22 @@ class App extends Component {
         return (
 
             <section>
-                <ProjectList list={this.state.projectList}/>
-                <Editor code={this.state.codeEditor}/>
+                <ProjectList list={this.state.projectList} />
+                <h1>HELLO?</h1>
+                <CodeMirror
+                    value='<h1>I ♥ react-codemirror2</h1>'
+                    options={{
+                        mode: 'xml',
+                        theme: 'material',
+                        lineNumbers: true
+                    }}
+                    onChange={(editor, data, value) => {
+                    }}
+                />
+
             </section>
-    
-    )
+
+        )
     }
 
 }

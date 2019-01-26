@@ -10,34 +10,18 @@ import 'codemirror/mode/xml/xml.js';
 import 'codemirror/mode/javascript/javascript.js';
 
 
-const Editor = () => {
+import {UnControlled as CodeMirror} from 'react-codemirror2'
+ 
+<CodeMirror
+  value='<h1>I ♥ react-codemirror2</h1>'
+  options={{
+    mode: 'xml',
+    theme: 'material',
+    lineNumbers: true
+  }}
+  onChange={(editor, data, value) => {
+  }}
+/>
 
-    // const socket = io();
-
-    var code = (props) => ("#htmlEditor")[0];
-
-    // HTML Editor
-    var testeditor = CodeMirror.fromTextArea(code, {
-        mode: "xml",
-        theme: "monokai",
-        lineNumbers: true,
-        autoCloseTags: true,
-        lineWrapping: true,
-        foldGutter: true,
-        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
-    });
-
-//     //HTML Change
-//   editor.on('change', function () {
-//     clearTimeout(delay);
-//     delay = setTimeout(updatePreview, 300);
-//     var msg = {
-//       html: editor.getValue(),
-//     };
-//     socket.emit("update-html", msg);
-//   });
-
-
-}
 
 export default Editor
