@@ -3,11 +3,6 @@ var editor
 var editorCSS
 var editorJS
 
-// var title = CodeMirror.fromTextArea(document.getElementById("project-title"), {
-//   mode: "text/html",
-//   lineNumbers: false,
-// });
-
 $(document).ready(function () {
 
   const socket = io();

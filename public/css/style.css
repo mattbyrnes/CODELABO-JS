@@ -58,12 +58,22 @@ a {
     margin-bottom: 7px;
     padding-bottom: 4px;
     border-bottom: 1px solid #666;
+    height: 30px;
   }
 
   .modal-content a:hover {
     color: hotpink;
   }
   
+  .del-btn {
+    float: right;
+    background: hotpink;
+    border-radius: 40px;
+    padding: 3px;
+    color: #fff;
+    border: 1px solid #eee;
+}
+
   /* The Close Button */
   .close {
     color: #aaaaaa;

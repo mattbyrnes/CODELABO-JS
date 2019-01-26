@@ -49,13 +49,13 @@ module.exports = function (app) {
             });
     });
 
-       // DELETE Project
-       app.delete('/api/project/:name', function (req, res) {
-        db.Project.findOneAndRemove({name: req.body.name})
+      // DELETE Project
+    app.delete('/api/project/:Id', function (req, res) {
+        db.Project.findOneAndRemove({ _id: mongoose.Types.ObjectId(req.params.Id) }, req.body)
             .then(function (dbProject) {
                 res.json(dbProject);
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 res.json(err);
             });
     });

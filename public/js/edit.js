@@ -48,7 +48,10 @@ $(document).ready(function () {
     $.getJSON('/api/project')
       .then(function (data) {
         const projectItem = data.map((e) =>
-          `<a class="open-project" id='${e._id}' href="/edit/${e._id}">${e.name}</a><br />`
+        `
+        <a class="open-project" id='${e._id}' href="/edit/${e._id}">${e.name} <button class="del-btn">x</button></a>
+        
+        `
         )
         $('#projectlist').html(projectItem);
         $('.fa-times').on('click', deleteDoc);
@@ -84,5 +87,12 @@ $(document).ready(function () {
       proId = res._id;
     });
   };
+
+  // Delete Project
+  $(document).on('click', '.del-btn', function (res) {
+    console.log('Delete');
+    $.ajax({ method: 'DELETE', url: `/api/project/${proId}` })
+    socket.emit('delete-project', res)
+  });
 
 });
