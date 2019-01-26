@@ -40,7 +40,6 @@ $(document).ready(function () {
     //     editorJS.setValue(res.javascript)
     //   })
 
-
   }
 
   //Get ALL Projects and List in Finder
