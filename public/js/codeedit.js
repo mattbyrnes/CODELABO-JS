@@ -1,17 +1,26 @@
+var title
 var editor
 var editorCSS
 var editorJS
 
-var title = CodeMirror.fromTextArea(document.getElementById("project-title"), {
-  mode: "text/html",
-  lineNumbers: false,
-});
+// var title = CodeMirror.fromTextArea(document.getElementById("project-title"), {
+//   mode: "text/html",
+//   lineNumbers: false,
+// });
 
 $(document).ready(function () {
+
+  const socket = io();
 
   var code = $("#htmlEditor")[0];
   var cssCode = $("#cssEditor")[0];
   var jsCode = $("#jsEditor")[0];
+
+  // Title Editor
+  title = CodeMirror.fromTextArea(document.getElementById("project-title"), {
+    mode: "text/html",
+    lineNumbers: false,
+  });
 
   // HTML Editor
   editor = CodeMirror.fromTextArea(code, {
@@ -48,13 +57,19 @@ $(document).ready(function () {
   });
 
 
+  //Title Change
+  title.on('change', function () {
+    socket.emit("update-title");
+  });
+
+  //HTML Change
   editor.on('change', function () {
     clearTimeout(delay);
     delay = setTimeout(updatePreview, 300);
     var msg = {
       html: editor.getValue(),
     };
-    // socket.emit("codechange", msg);
+    socket.emit("update-html", msg);
   });
 
   editorCSS.on('change', function () {

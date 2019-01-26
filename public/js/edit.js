@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+  const socket = io();
+
   var proId;
   var url = window.location.href;
   var docId = url.split("/");
@@ -82,7 +84,5 @@ $(document).ready(function () {
       proId = res._id;
     });
   };
-
-  const socket = io();
 
 });
