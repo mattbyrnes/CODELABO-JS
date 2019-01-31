@@ -20,26 +20,6 @@ $(document).ready(function () {
     $.get(`/api/project/${proId}`)
     .then((res) => testproject(res))
 
-    // $.get(`/api/project/${proId}`)
-    //   .then(res => {
-    //     title.setValue(res.name);
-    //   })
-
-    // $.get(`/api/project/${proId}`)
-    //   .then(res => {
-    //     editor.setValue(res.html);
-    //   })
-
-    // $.get(`/api/project/${proId}`)
-    //   .then(res => {
-    //     editorCSS.setValue(res.css);
-    //   })
-
-    // $.get(`/api/project/${proId}`)
-    //   .then(res => {
-    //     editorJS.setValue(res.javascript)
-    //   })
-
   }
 
   //Get ALL Projects and List in Finder
