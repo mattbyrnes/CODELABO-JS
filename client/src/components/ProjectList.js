@@ -1,20 +1,19 @@
-import React from 'react'
-
-var $ = `function`;
+import React from 'react';
 
 const ProjectList = (props) => {
-    const listofProjects = props.list.map((item) => {
-        return (
-            // <a href="/">{item.name}</a>
-            <a class="open-project" id='{item._id}' href="/edit/{item._id}">{item.name} <button class="del-btn">x</button></a>
-        )
-    })
-    return (
-        <div >
-            {listofProjects}
-        </div>
-    )
+	const listofProjects = props.list.map((item) => {
+		console.log(item)
+		return (
+			<button onClick={() => props.clickhandler(item._id)} 
+			className="open-project" id={item._id}>{item.name} 
+			<button className="del-btn">x</button></button>
+		)
+	})
+	return (
+		<div >
+			{listofProjects}
+		</div>
+	)
 }
 
-
-export default ProjectList
+export default ProjectList;

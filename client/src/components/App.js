@@ -1,33 +1,41 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ProjectTitle from './ProjectTitle';
-import ProjectList from './ProjectList';
+import '../codemirror.css';
+import '../monokai.css';
+import '../reset.css';
 import '../style.css';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material.css';
-import { UnControlled as CodeMirror } from 'react-codemirror2'
+import { UnControlled as CodeMirror } from 'react-codemirror2';
+
+import ProjectList from './ProjectList';
+import ProjectTitle from './ProjectTitle';
+import ProjectPreview from './ProjectPreview';
+
 require('codemirror/mode/xml/xml');
+require('codemirror/mode/css/css');
 require('codemirror/mode/javascript/javascript');
 
-class App extends Component {
+export class App extends Component {
+
 	constructor(props) {
 		super(props)
 		this.state = {
 			projectList: [],
-			projectTitle: []
+			projectTitle: [],
+			projectPreview: [],
+			selectedProject: {}
 		}
-	}
+	};
 
 	componentDidMount() {
-		this.getProjects();
-		this.getTitle();
+		this.getAllProjects();
+		this.getProject();
 	}
 
-	getProjects() {
-		axios.get('/api/project')
-			.then((list) => {
+	getProject = Id => {
+		axios.get(`/api/project/${Id}`)
+			.then((item) => {
 				this.setState({
-					projectList: list.data
+					selectedProject: item.data
 				})
 			})
 			.catch(function (err) {
@@ -35,11 +43,11 @@ class App extends Component {
 			})
 	}
 
-	getTitle() {
-		axios.get('/api/project/:Id')
+	getAllProjects() {
+		axios.get(`/api/project`)
 			.then((list) => {
 				this.setState({
-					projectTitle: list.data
+					projectList: list.data
 				})
 			})
 			.catch(function (err) {
@@ -51,19 +59,42 @@ class App extends Component {
 		return (
 			<section>
 				<form>
-					<div class="edit-col">
-
-						<div class="title-input">
-						<ProjectTitle tit={this.state.projectTitle} />
-							{/* <input id="project-title" value="" /> */}
+					<div className="edit-col">
+						<div className="title-input">
+							<ProjectTitle
+								title={this.state.selectedProject}
+							/>
 						</div>
-						
 						<div id="htmlEditor">
 							<CodeMirror
-								value='<h1>I ♥ react-codemirror2</h1>'
+								value={this.state.selectedProject.html}
 								options={{
 									mode: 'xml',
-									theme: 'material',
+									theme: 'monokai',
+									lineNumbers: true
+								}}
+								onChange={(editor, data, value) => {
+								}}
+							/>
+						</div>
+						<div id="cssEditor">
+							<CodeMirror
+								value={this.state.selectedProject.css}
+								options={{
+									mode: 'css',
+									theme: 'monokai',
+									lineNumbers: true
+								}}
+								onChange={(editor, data, value) => {
+								}}
+							/>
+						</div>
+						<div id="jsEditor">
+							<CodeMirror
+								value={this.state.selectedProject.javascript}
+								options={{
+									mode: 'javascript',
+									theme: 'monokai',
 									lineNumbers: true
 								}}
 								onChange={(editor, data, value) => {
@@ -71,30 +102,36 @@ class App extends Component {
 							/>
 						</div>
 					</div>
-					<div class="preview-col">
+
+					<div className="preview-col">
+
 						<label>Preview</label>
-						<div class="device">
-							<iframe id="preview"></iframe>
+						<div className="device">
+							{/* <ProjectPreview /> */}
 						</div>
+
 					</div>
 				</form>
 
-				<button id="myBtn" class="projects-btn">My Projects</button>
-				<div id="myModal" class="modal">
-					<div class="modal-content">
-						<span class="close">&times;</span>
+				<button id="myBtn" className="projects-btn">My Projects</button>
+
+				<div id="myModal" className="modal">
+					<div className="modal-content">
+						<span className="close">&times;</span>
 						<h2>My Projects</h2><br /><br />
 						<div id="projectlist">
-							<ProjectList list={this.state.projectList} />
+							<ProjectList
+								list={this.state.projectList}
+								clickhandler={this.getProject}
+							/>
 						</div>
 					</div>
 				</div>
 
 			</section>
-
 		)
 	}
-
 }
 
 export default App;
+

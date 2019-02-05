@@ -1,18 +1,11 @@
-import React from 'react'
-
-var $ = `function`;
+import React from 'react';
 
 const ProjectTitle = (props) => {
-    const titleOfProject = props.list.map((item) => {
-        return (
-            <a href="/">{item.name}</a>
-        )
-    })
-    return (
-        <div >
-            {titleOfProject}
-        </div>
-    )
+	return (
+		<h1>
+			{props.title.name}
+		</h1>
+	)
 }
 
-export default ProjectTitle
+export default ProjectTitle;

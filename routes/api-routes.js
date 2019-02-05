@@ -15,7 +15,6 @@ module.exports = function (app) {
 
      // Get Selected Project
      app.get('/api/project/:Id', function (req, res) {
-         console.log("get by id")
         console.log(req.body);
         db.Project.findOne({_id: req.params.Id})
             .then(function (dbProject) {
