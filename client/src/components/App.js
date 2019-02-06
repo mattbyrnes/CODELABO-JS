@@ -5,11 +5,7 @@ import '../monokai.css';
 import '../reset.css';
 import '../style.css';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
-
 import ProjectList from './ProjectList';
-import ProjectTitle from './ProjectTitle';
-import ProjectPreview from './ProjectPreview';
-
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/css/css');
 require('codemirror/mode/javascript/javascript');
@@ -20,8 +16,8 @@ export class App extends Component {
 		super(props)
 		this.state = {
 			projectList: [],
-			projectTitle: [],
-			projectPreview: [],
+			preview: [],
+			html: [],
 			selectedProject: {}
 		}
 	};
@@ -29,8 +25,29 @@ export class App extends Component {
 	componentDidMount() {
 		this.getAllProjects();
 		this.getProject();
+		this.updateProject();
+		// this.updatePreview();
 	}
 
+	// Update Functions
+	updateProject = value => {
+		axios.put(`/api/project/${this.state.selectedProject._id}`, { name: value })
+			.then(res => console.log(res))
+	}
+	updateHTML = value => {
+		axios.put(`/api/project/${this.state.selectedProject._id}`, { html: value })
+			.then(res => console.log(res))
+	}
+	updateCSS = value => {
+		axios.put(`/api/project/${this.state.selectedProject._id}`, { css: value })
+			.then(res => console.log(res))
+	}
+	updateJS = value => {
+		axios.put(`/api/project/${this.state.selectedProject._id}`, { javascript: value })
+			.then(res => console.log(res))
+	}
+
+	// Get Selected Project
 	getProject = Id => {
 		axios.get(`/api/project/${Id}`)
 			.then((item) => {
@@ -43,6 +60,7 @@ export class App extends Component {
 			})
 	}
 
+	// Get All Projects
 	getAllProjects() {
 		axios.get(`/api/project`)
 			.then((list) => {
@@ -61,8 +79,16 @@ export class App extends Component {
 				<form>
 					<div className="edit-col">
 						<div className="title-input">
-							<ProjectTitle
-								title={this.state.selectedProject}
+							<CodeMirror
+								name="title"
+								value={this.state.selectedProject.name}
+								options={{
+									mode: 'text/html',
+									lineNumbers: false
+								}}
+								onChange={(editor, data, value) => {
+									this.updateProject(value)
+								}}
 							/>
 						</div>
 						<div id="htmlEditor">
@@ -74,6 +100,7 @@ export class App extends Component {
 									lineNumbers: true
 								}}
 								onChange={(editor, data, value) => {
+									this.updateHTML(value)
 								}}
 							/>
 						</div>
@@ -86,6 +113,7 @@ export class App extends Component {
 									lineNumbers: true
 								}}
 								onChange={(editor, data, value) => {
+									this.updateCSS(value)
 								}}
 							/>
 						</div>
@@ -98,19 +126,21 @@ export class App extends Component {
 									lineNumbers: true
 								}}
 								onChange={(editor, data, value) => {
+									this.updateJS(value)
 								}}
 							/>
 						</div>
 					</div>
 
 					<div className="preview-col">
-
 						<label>Preview</label>
 						<div className="device">
-							{/* <ProjectPreview /> */}
+							<iframe id="preview">
+								<p>Will this work?</p>
+							</iframe>
 						</div>
-
 					</div>
+
 				</form>
 
 				<button id="myBtn" className="projects-btn">My Projects</button>
@@ -131,6 +161,7 @@ export class App extends Component {
 			</section>
 		)
 	}
+
 }
 
 export default App;
