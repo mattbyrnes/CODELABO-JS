@@ -10,8 +10,7 @@ const PORT = process.env.PORT || 8080;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static('public'));
-
+// app.use(express.static('public'));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
