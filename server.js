@@ -18,8 +18,6 @@ mongoose.connect('mongodb://testuser:password1@ds151864.mlab.com:51864/heroku_69
 //   useNewUrlParser: true
 // });
 
-
-
 // Routes
 require('./sockets/sockets')(io);
 require('./routes/api-routes')(app);

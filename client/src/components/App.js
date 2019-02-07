@@ -135,7 +135,8 @@ export class App extends Component {
 					<div className="preview-col">
 						<label>Preview</label>
 						<div className="device">
-							<iframe id="preview">
+							<iframe title="preview" id="preview">
+								<h1>Hello!</h1>
 								<p>Will this work?</p>
 							</iframe>
 						</div>
