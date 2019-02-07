@@ -12,6 +12,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 mongoose.connect('mongodb://testuser:password1@ds151864.mlab.com:51864/heroku_69xz4535', { useNewUrlParser: true });
 
 // mongoose.connect('mongodb://localhost/codelaborate', {
