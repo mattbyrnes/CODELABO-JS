@@ -31,7 +31,7 @@ const ProjectPreview = () => {
 
 
 	return (
-		<iframe id="preview"></iframe>
+		<iframe title="preview" id="preview"></iframe>
 	)
 }
 

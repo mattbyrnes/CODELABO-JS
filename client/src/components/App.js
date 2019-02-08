@@ -6,18 +6,19 @@ import '../reset.css';
 import '../style.css';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 import ProjectList from './ProjectList';
+// import ProjectPreview from './ProjectPreview';
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/css/css');
 require('codemirror/mode/javascript/javascript');
 
 export class App extends Component {
-
 	constructor(props) {
 		super(props)
 		this.state = {
 			projectList: [],
-			preview: [],
-			html: [],
+			html: {},
+			css: {},
+			javascript: {},
 			selectedProject: {}
 		}
 	};
@@ -25,8 +26,54 @@ export class App extends Component {
 	componentDidMount() {
 		this.getAllProjects();
 		this.getProject();
+		this.updatePreview();
 		this.updateProject();
-		// this.updatePreview();
+	}
+
+	// Update Preview
+	updatePreview = value => {
+
+		// var html = ("#htmlEditor")[0];
+		// var css = ("#cssEditor")[0];
+		// var javascript = ("#jsEditor")[0];
+
+		var previewFrame = document.getElementById('preview');
+		var preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+		preview.open();
+
+		// preview.write({selectedProject: value});
+		preview.write(this.state.selectedProject.html);
+		preview.write(this.state.selectedProject.css);
+		preview.write(this.state.selectedProject.javascript);
+
+		preview.close();
+	}
+
+	// Get All Projects
+	getAllProjects() {
+		axios.get(`/api/project`)
+			.then((list) => {
+				this.setState({
+					projectList: list.data
+				})
+			})
+			.catch(function (err) {
+				console.log(err)
+			})
+	}
+
+	// Delete Function
+	deleteProject = Id => {
+		console.log("Delete Button Click");
+		axios.get(`/api/project/${Id}`)
+			.then((item) => {
+				axios.delete({
+					selectedProject: item.data
+				})
+			})
+			.catch(function (err) {
+				console.log(err)
+			})
 	}
 
 	// Update Functions
@@ -60,19 +107,6 @@ export class App extends Component {
 			})
 	}
 
-	// Get All Projects
-	getAllProjects() {
-		axios.get(`/api/project`)
-			.then((list) => {
-				this.setState({
-					projectList: list.data
-				})
-			})
-			.catch(function (err) {
-				console.log(err)
-			})
-	}
-
 	render() {
 		return (
 			<section>
@@ -97,10 +131,14 @@ export class App extends Component {
 								options={{
 									mode: 'xml',
 									theme: 'monokai',
-									lineNumbers: true
+									lineNumbers: true,
+									autoCloseTags: true,
+									lineWrapping: true,
+									foldGutter: true
 								}}
-								onChange={(editor, data, value) => {
+								onChange={(editor, data, value, preview) => {
 									this.updateHTML(value)
+									this.updatePreview(preview)
 								}}
 							/>
 						</div>
@@ -110,7 +148,10 @@ export class App extends Component {
 								options={{
 									mode: 'css',
 									theme: 'monokai',
-									lineNumbers: true
+									lineNumbers: true,
+									autoCloseTags: true,
+									lineWrapping: true,
+									foldGutter: true
 								}}
 								onChange={(editor, data, value) => {
 									this.updateCSS(value)
@@ -123,7 +164,10 @@ export class App extends Component {
 								options={{
 									mode: 'javascript',
 									theme: 'monokai',
-									lineNumbers: true
+									lineNumbers: true,
+									autoCloseTags: true,
+									lineWrapping: true,
+									foldGutter: true
 								}}
 								onChange={(editor, data, value) => {
 									this.updateJS(value)
@@ -131,17 +175,13 @@ export class App extends Component {
 							/>
 						</div>
 					</div>
-
 					<div className="preview-col">
 						<label>Preview</label>
 						<div className="device">
-							<iframe title="preview" id="preview">
-								<h1>Hello!</h1>
-								<p>Will this work?</p>
-							</iframe>
+							{/* <ProjectPreview /> */}
+							<iframe title="preview" id="preview"></iframe>
 						</div>
 					</div>
-
 				</form>
 
 				<button id="myBtn" className="projects-btn">My Projects</button>
@@ -154,6 +194,7 @@ export class App extends Component {
 							<ProjectList
 								list={this.state.projectList}
 								clickhandler={this.getProject}
+								clickhandler2={this.deleteProject}
 							/>
 						</div>
 					</div>

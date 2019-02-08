@@ -4,10 +4,12 @@ const ProjectList = (props) => {
 	const listofProjects = props.list.map((item) => {
 		console.log(item)
 		return (
-			<button onClick={() => props.clickhandler(item._id)} 
-			className="open-project" id={item._id}>{item.name} 
-			<button className="del-btn">x</button></button>
+			<div className="project-item">
+			<button onClick={() => props.clickhandler(item._id)} className="open-btn" id={item._id}>{item.name}</button>
+			<button onClick={() => props.clickhandler2(item._id)} className="del-btn" id={item._id}> X </button>
+			</div>
 		)
+
 	})
 	return (
 		<div >

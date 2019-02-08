@@ -8,6 +8,37 @@ a {
     text-decoration: none;
 }
 
+.project-item {
+    height: 60px;
+    border-bottom: 1px solid #111;
+}
+
+.open-btn {
+    background: none;
+    color: #fff;
+    width: 100px;
+    overflow: hidden;
+    border: 0px;
+    text-align: left;
+    display: flex;
+    white-space: nowrap;
+    float: left;
+}
+
+.del-btn {
+    float: right;
+    background: hotpink;
+    border-radius: 30px;
+    color: #fff;
+    border: 1px solid #eee;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    right: 16px;
+    text-align: center;
+    margin-top: -7px;
+}
+
 .save-btn {
     width: 110px;
     position: absolute; 
@@ -70,14 +101,7 @@ a {
     color: hotpink;
   }
   
-  .del-btn {
-    float: right;
-    background: hotpink;
-    border-radius: 40px;
-    padding: 3px;
-    color: #fff;
-    border: 1px solid #eee;
-}
+  
 
   /* The Close Button */
   .close {
